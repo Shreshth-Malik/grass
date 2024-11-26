@@ -14,7 +14,7 @@ extend-exclude = '''
 '''
 
 [tool.ruff]
-required-version = ">=0.6.0"
+required-version = ">=0.8.0"
 
 builtins = ["_"]
 
@@ -183,7 +183,6 @@ ignore = [
     "PLW1641", # eq-without-hash
     "PLW2901", # redefined-loop-name
     "PLW3201", # bad-dunder-method-name
-    "PT004",   # pytest-missing-fixture-name-underscore # deprecated, so doesn't appear with --preview
     "PTH100",  # os-path-abspath
     "PTH101",  # os-chmod
     "PTH102",  # os-mkdir
@@ -260,7 +259,9 @@ ignore = [
 # See https://docs.astral.sh/ruff/settings/#lint_per-file-ignores
 # "A005", # builtin-module-shadowing
 # "PLW0108", # unnecessary-lambda
+# "SIM115", # open-file-with-context-handler
 # Ignore `E402` (import violations) in all `__init__.py` files
+"**.py" = ["PYI066"]
 "*/testsuite/**.py" = ["PT009", "PT027"]
 "__init__.py" = ["E402"]
 "display/d.mon/render_cmd.py" = ["SIM115"]
@@ -299,8 +300,6 @@ ignore = [
 "lib/imagery/testsuite/test_imagery_sigsetfile.py" = ["FURB152"]
 "lib/init/grass.py" = ["SIM115"]
 "locale/grass_po_stats.py" = ["SIM115"]
-"man/build_*.py" = ["SIM115"]
-"man/parser_standard_options.py" = ["SIM115"]
 "python/grass/__init__.py" = ["PYI056"]
 "python/grass/exp*/tests/grass_script_mapset_session_test.py" = ["SIM117"]
 "python/grass/exp*/tests/grass_script_tmp_mapset_session_test.py" = ["SIM117"]
@@ -317,6 +316,7 @@ ignore = [
 "python/grass/pygrass/modules/grid/testsuite/test_*_modules_grid_doctests.py" = ["F401"]
 "python/grass/pygrass/modules/interface/env.py" = ["SIM115"]
 "python/grass/pygrass/modules/testsuite/test_pygrass_modules_doctests.py" = ["F401"]
+"python/grass/pygrass/raster/category.py" = ["FURB189"]
 "python/grass/pygrass/raster/segment.py" = ["SIM115"]
 "python/grass/pygrass/tests/*.py" = ["SIM115"]
 "python/grass/pygrass/vector/geometry.py" = ["PYI024"]
@@ -326,7 +326,7 @@ ignore = [
 "python/grass/script/core.py" = ["SIM115"]
 "python/grass/script/db.py" = ["SIM115"]
 "python/grass/script/raster.py" = ["SIM115"]
-"python/grass/script/utils.py" = ["SIM115"]
+"python/grass/script/utils.py" = ["FURB189", "SIM115"]
 "python/grass/temporal/aggregation.py" = ["SIM115"]
 "python/grass/temporal/register.py" = ["SIM115"]
 "python/grass/temporal/stds_export.py" = ["SIM115"]
@@ -378,7 +378,6 @@ ignore = [
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-python_files = "*/tests/*_test.py"
 addopts = """
     --ignore-glob='dist.*'
     --ignore-glob='bin.*'
