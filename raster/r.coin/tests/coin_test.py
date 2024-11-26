@@ -1,4 +1,5 @@
 import pytest
+import grass.script as gs
 from grass.script import run_command, parse_command
 
 
@@ -6,12 +7,12 @@ from grass.script import run_command, parse_command
 def setup_maps():
     """Set up a temporary region and generate test raster maps."""
 
-    run_command("g.region", n=3, s=0, e=3, w=0, res=1)
+    gs.run_command("g.region", n=3, s=0, e=3, w=0, res=1)
 
     # 1 1 2
     # 1 2 3
     # 2 2 3
-    run_command(
+    gs.run_command(
         "r.mapcalc",
         expression=(
             "map1 = "
@@ -28,7 +29,7 @@ def setup_maps():
     # 1 2 2
     # 2 1 3
     # 3 3 3
-    run_command(
+    gs.run_command(
         "r.mapcalc",
         expression=(
             "map2 = "
@@ -43,13 +44,13 @@ def setup_maps():
     )
     yield
 
-    run_command("g.remove", flags="f", type="raster", name=["map1", "map2"])
+    gs.run_command("g.remove", flags="f", type="raster", name=["map1", "map2"])
 
 
 def test_r_coin(setup_maps):
     """Test the r.coin module."""
 
-    coin_output = parse_command("r.coin", first="map1", second="map2", units="c")
+    coin_output = gs.parse_command("r.coin", first="map1", second="map2", units="c")
 
     # Start parsing the output
     actual_results = []
