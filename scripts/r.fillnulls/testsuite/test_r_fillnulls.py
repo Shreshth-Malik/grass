@@ -21,11 +21,10 @@ class TestRFillNulls(TestCase):
 
     module = "r.fillnulls"
     mapName = "elevation"
-    expression = "elevation_filt = if(elevation > 130, null(), elevation)"
-    mapNameCalc = "elevation_filt"
+    expression = "elevation_fill = if(elevation > 130, null(), elevation)"
+    mapNameCalc = "elevation_fill"
     mapComplete = "elevation_complete"
     mapInt = "elevation_int"
-    values = "null_cells=0"
 
     def setUp(self):
         """Create maps in a small region."""
@@ -55,7 +54,16 @@ class TestRFillNulls(TestCase):
             overwrite=True,
         )
         self.assertModule(module)
-        self.assertRasterFitsUnivar(raster=self.mapComplete, reference=self.values)
+        self.assertRasterFitsUnivar(
+            raster=self.mapComplete,
+            reference={
+                "null_cells": float(0),
+                "max": 130.913299,
+                "range": 73.624588,
+                "variance": 288.817309,
+            },
+            precision=1e-6,
+        )
 
     def test_bicubic(self):
         """Test using bicubic interpolation"""
@@ -67,7 +75,16 @@ class TestRFillNulls(TestCase):
             overwrite=True,
         )
         self.assertModule(module)
-        self.assertRasterFitsUnivar(raster=self.mapComplete, reference=self.values)
+        self.assertRasterFitsUnivar(
+            raster=self.mapComplete,
+            reference={
+                "null_cells": float(0),
+                "max": 135.180002,
+                "range": 77.891290,
+                "variance": 297.438443,
+            },
+            precision=1e-6,
+        )
 
     def test_bilinear(self):
         """Test using bilinear interpolation"""
@@ -80,7 +97,16 @@ class TestRFillNulls(TestCase):
             overwrite=True,
         )
         self.assertModule(module)
-        self.assertRasterFitsUnivar(raster=self.mapComplete, reference=self.values)
+        self.assertRasterFitsUnivar(
+            raster=self.mapComplete,
+            reference={
+                "null_cells": float(0),
+                "max": 135.845183,
+                "range": 78.556471,
+                "variance": 295.640790,
+            },
+            precision=1e-6,
+        )
 
     def test_mask(self):
         """Test using bicubic interpolation with a raster mask applied"""
@@ -101,9 +127,16 @@ class TestRFillNulls(TestCase):
         )
 
         self.assertModule(module)
-        self.assertRasterMinMax(self.mapComplete, refmin=57, refmax=100)
-
         self.runModule("r.mask", flags="r")
+        self.assertRasterFitsUnivar(
+            raster=self.mapComplete,
+            reference={
+                "max": float(100),
+                "range": float(43),
+                "variance": 79.572407,
+            },
+            precision=1e-6,
+        )
 
 
 if __name__ == "__main__":
