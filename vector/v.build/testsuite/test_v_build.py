@@ -22,8 +22,7 @@ class TestVBuild(TestCase):
         )
 
         # Read the expected output.
-        cls.vbuild_output = """
-N,S,E,W,T,B: 2.500000, 0.500000, 2.500000, 0.500000, 0.000000, 0.000000
+        cls.vbuild_output = """N,S,E,W,T,B: 2.500000, 0.500000, 2.500000, 0.500000, 0.000000, 0.000000
 -----------------------------------
 Nodes (2 nodes, alive + dead):
 node = 1, n_lines = 1, xyz = 0.500000, 0.500000, 0.000000
@@ -77,8 +76,7 @@ Layer      0  number of unique cats:       1  number of cats:       2  number of
             option="build,dump,sdump,cdump,fdump",
             quiet=True,
         ).strip()
-        self.assertMultiLineEqual(build_module[138:], self.vbuild_output)
-
+        self.assertMultiLineEqual(build_module[140:], self.vbuild_output)
 
 if __name__ == "__main__":
     test()
