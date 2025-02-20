@@ -76,7 +76,7 @@ Layer      0  number of unique cats:       1  number of cats:       2  number of
             option="build,dump,sdump,cdump,fdump",
             quiet=True,
         ).strip()
-        self.assertMultiLineEqual(build_module[188:], self.vbuild_output)
+        self.assertMultiLineEqual(build_module[186:], self.vbuild_output)
 
 if __name__ == "__main__":
     test()
