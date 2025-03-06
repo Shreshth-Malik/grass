@@ -28,7 +28,7 @@ def test_clump_basic(setup_maps):
         {"category": 4, "description": ""},
     ]
 
-    gs.assertEqual(category_data, expected_categories)
+    assert category_data == expected_categories, "Category data does not match expected categories"
 
 
 def test_clump_diagonal(setup_maps):
@@ -56,7 +56,7 @@ def test_clump_diagonal(setup_maps):
         {"category": 2, "description": ""},
         {"category": 3, "description": ""},
     ]
-    gs.assertEqual(category_data, expected_categories)
+    assert category_data == expected_categories, "Category data does not match expected categories"
 
 
 def test_clump_minsize(setup_maps):
@@ -84,7 +84,7 @@ def test_clump_minsize(setup_maps):
         {"category": 2, "description": ""},
     ]
 
-    gs.assertEqual(category_data, expected_categories)
+    assert category_data == expected_categories, "Category data does not match expected categories"
 
 
 def test_clump_threshold(setup_maps):
@@ -113,4 +113,4 @@ def test_clump_threshold(setup_maps):
         {"category": 3, "description": ""},
     ]
 
-    gs.assertEqual(category_data, expected_categories)
+    assert category_data == expected_categories, "Category data does not match expected categories"
