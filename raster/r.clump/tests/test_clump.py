@@ -103,7 +103,7 @@ def test_clump_threshold(setup_maps):
     assert "clumped_map" in output_maps, "Output raster map 'clumped_map' should exist"
 
     category_output = gs.read_command(
-        "r.category", map="clumped_map", output_format="json"
+        "r.category", map="clumped_map", output_format="json", env=session.env
     )
     category_data = json.loads(category_output)
 
