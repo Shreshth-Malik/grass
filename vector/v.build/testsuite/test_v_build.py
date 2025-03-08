@@ -22,7 +22,10 @@ class TestVBuild(TestCase):
         )
 
         # Read the expected output.
-        cls.vbuild_output = """N,S,E,W,T,B: 2.500000, 0.500000, 2.500000, 0.500000, 0.000000, 0.000000
+        cls.vbuild_output = """---------- TOPOLOGY DUMP ----------
+Topology format: native
+-----------------------------------
+N,S,E,W,T,B: 2.500000, 0.500000, 2.500000, 0.500000, 0.000000, 0.000000
 -----------------------------------
 Nodes (2 nodes, alive + dead):
 node = 1, n_lines = 1, xyz = 0.500000, 0.500000, 0.000000
@@ -69,14 +72,19 @@ Layer      0  number of unique cats:       1  number of cats:       2  number of
 
     def test_vbuild_output(self):
         """Compare the v.build output (build_module) to the expected output."""
-                # Run v.build (with multiple dump options) and store its output in a class variable.
+        # Run v.build (with multiple dump options) and store its output in a class variable.
         build_module = gs.read_command(
             "v.build",
             map="test_3x3_map",
             option="build,dump,sdump,cdump,fdump",
             quiet=True,
         ).strip()
-        self.assertMultiLineEqual(build_module[186:], self.vbuild_output)
+        output_lines = build_module.split("\n")
+        filtered_output = "\n".join(
+            [line for line in output_lines if not line.startswith("Map:")]
+        )
+        self.assertMultiLineEqual(filtered_output, self.vbuild_output)
+
 
 if __name__ == "__main__":
     test()
