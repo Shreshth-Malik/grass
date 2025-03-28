@@ -123,8 +123,7 @@ def test_file_output(setup_maps, tmp_path):
         env=session.env,
     )
 
-    with open(output_file) as f:
-        file_content = f.read().strip()
+    file_content = output_file.read_text().strip()
 
     expected_output = """north: 3
 south: 0
